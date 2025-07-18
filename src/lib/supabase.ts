@@ -1,0 +1,382 @@
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables');
+}
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+export type Database = {
+  public: {
+    Tables: {
+      user_profiles: {
+        Row: {
+          id: string;
+          user_id: string;
+          created_at: string;
+          updated_at: string;
+          timezone: string;
+          preferences: any;
+          consent_given: boolean;
+          last_active: string;
+        };
+        Insert: {
+          id?: string;
+          user_id?: string;
+          created_at?: string;
+          updated_at?: string;
+          timezone?: string;
+          preferences?: any;
+          consent_given?: boolean;
+          last_active?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          created_at?: string;
+          updated_at?: string;
+          timezone?: string;
+          preferences?: any;
+          consent_given?: boolean;
+          last_active?: string;
+        };
+      };
+      mood_entries: {
+        Row: {
+          id: string;
+          user_id: string;
+          session_id: string;
+          period_type: 'today' | 'week' | 'month';
+          mood_id: string;
+          mood_name: string;
+          mood_emoji: string;
+          mood_value: number;
+          mood_category: 'positive' | 'neutral' | 'negative' | 'concerning';
+          severity_score: number;
+          emotional_labels: string[];
+          context_tags: string[];
+          created_at: string;
+          updated_at: string;
+          ip_address: string | null;
+          user_agent: string | null;
+        };
+        Insert: {
+          id?: string;
+          user_id?: string;
+          session_id: string;
+          period_type: 'today' | 'week' | 'month';
+          mood_id: string;
+          mood_name: string;
+          mood_emoji: string;
+          mood_value: number;
+          mood_category: 'positive' | 'neutral' | 'negative' | 'concerning';
+          severity_score: number;
+          emotional_labels?: string[];
+          context_tags?: string[];
+          created_at?: string;
+          updated_at?: string;
+          ip_address?: string | null;
+          user_agent?: string | null;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          session_id?: string;
+          period_type?: 'today' | 'week' | 'month';
+          mood_id?: string;
+          mood_name?: string;
+          mood_emoji?: string;
+          mood_value?: number;
+          mood_category?: 'positive' | 'neutral' | 'negative' | 'concerning';
+          severity_score?: number;
+          emotional_labels?: string[];
+          context_tags?: string[];
+          created_at?: string;
+          updated_at?: string;
+          ip_address?: string | null;
+          user_agent?: string | null;
+        };
+      };
+      feedback_history: {
+        Row: {
+          id: string;
+          user_id: string;
+          session_id: string;
+          mood_entry_id: string | null;
+          feedback_type: 'text' | 'voice' | 'structured';
+          feedback_content: string;
+          sentiment_score: number | null;
+          keywords: string[];
+          crisis_indicators: string[];
+          created_at: string;
+          processed_at: string | null;
+          processing_status: 'pending' | 'processed' | 'flagged';
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          session_id: string;
+          mood_entry_id?: string | null;
+          feedback_type: 'text' | 'voice' | 'structured';
+          feedback_content: string;
+          sentiment_score?: number | null;
+          keywords?: string[];
+          crisis_indicators?: string[];
+          created_at?: string;
+          processed_at?: string | null;
+          processing_status?: 'pending' | 'processed' | 'flagged';
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          session_id?: string;
+          mood_entry_id?: string | null;
+          feedback_type?: 'text' | 'voice' | 'structured';
+          feedback_content?: string;
+          sentiment_score?: number | null;
+          keywords?: string[];
+          crisis_indicators?: string[];
+          created_at?: string;
+          processed_at?: string | null;
+          processing_status?: 'pending' | 'processed' | 'flagged';
+        };
+      };
+      mood_trends: {
+        Row: {
+          id: string;
+          user_id: string;
+          trend_period: 'daily' | 'weekly' | 'monthly' | 'quarterly';
+          start_date: string;
+          end_date: string;
+          average_mood_score: number;
+          dominant_emotion: string;
+          emotion_distribution: any;
+          trend_direction: 'improving' | 'stable' | 'declining' | 'concerning';
+          volatility_score: number;
+          risk_factors: string[];
+          positive_indicators: string[];
+          data_points: number;
+          confidence_level: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          trend_period: 'daily' | 'weekly' | 'monthly' | 'quarterly';
+          start_date: string;
+          end_date: string;
+          average_mood_score: number;
+          dominant_emotion: string;
+          emotion_distribution?: any;
+          trend_direction: 'improving' | 'stable' | 'declining' | 'concerning';
+          volatility_score?: number;
+          risk_factors?: string[];
+          positive_indicators?: string[];
+          data_points?: number;
+          confidence_level?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          trend_period?: 'daily' | 'weekly' | 'monthly' | 'quarterly';
+          start_date?: string;
+          end_date?: string;
+          average_mood_score?: number;
+          dominant_emotion?: string;
+          emotion_distribution?: any;
+          trend_direction?: 'improving' | 'stable' | 'declining' | 'concerning';
+          volatility_score?: number;
+          risk_factors?: string[];
+          positive_indicators?: string[];
+          data_points?: number;
+          confidence_level?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      mental_health_alerts: {
+        Row: {
+          id: string;
+          user_id: string;
+          alert_type: 'crisis' | 'declining_trend' | 'risk_pattern' | 'improvement' | 'milestone';
+          severity_level: 'low' | 'moderate' | 'high' | 'critical';
+          alert_title: string;
+          alert_description: string;
+          trigger_data: any;
+          recommended_actions: string[];
+          professional_referral_needed: boolean;
+          crisis_intervention_required: boolean;
+          acknowledged: boolean;
+          acknowledged_at: string | null;
+          resolved: boolean;
+          resolved_at: string | null;
+          created_at: string;
+          expires_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          alert_type: 'crisis' | 'declining_trend' | 'risk_pattern' | 'improvement' | 'milestone';
+          severity_level: 'low' | 'moderate' | 'high' | 'critical';
+          alert_title: string;
+          alert_description: string;
+          trigger_data?: any;
+          recommended_actions?: string[];
+          professional_referral_needed?: boolean;
+          crisis_intervention_required?: boolean;
+          acknowledged?: boolean;
+          acknowledged_at?: string | null;
+          resolved?: boolean;
+          resolved_at?: string | null;
+          created_at?: string;
+          expires_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          alert_type?: 'crisis' | 'declining_trend' | 'risk_pattern' | 'improvement' | 'milestone';
+          severity_level?: 'low' | 'moderate' | 'high' | 'critical';
+          alert_title?: string;
+          alert_description?: string;
+          trigger_data?: any;
+          recommended_actions?: string[];
+          professional_referral_needed?: boolean;
+          crisis_intervention_required?: boolean;
+          acknowledged?: boolean;
+          acknowledged_at?: string | null;
+          resolved?: boolean;
+          resolved_at?: string | null;
+          created_at?: string;
+          expires_at?: string | null;
+        };
+      };
+      assessment_sessions: {
+        Row: {
+          id: string;
+          user_id: string;
+          session_type: 'quick' | 'comprehensive' | 'crisis' | 'follow_up';
+          status: 'in_progress' | 'completed' | 'abandoned' | 'interrupted';
+          started_at: string;
+          completed_at: string | null;
+          duration_minutes: number | null;
+          mood_entries_count: number;
+          feedback_entries_count: number;
+          overall_score: number | null;
+          risk_assessment: 'low' | 'moderate' | 'high' | 'critical' | null;
+          recommendations: string[];
+          follow_up_required: boolean;
+          follow_up_date: string | null;
+          metadata: any;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          session_type: 'quick' | 'comprehensive' | 'crisis' | 'follow_up';
+          status?: 'in_progress' | 'completed' | 'abandoned' | 'interrupted';
+          started_at?: string;
+          completed_at?: string | null;
+          duration_minutes?: number | null;
+          mood_entries_count?: number;
+          feedback_entries_count?: number;
+          overall_score?: number | null;
+          risk_assessment?: 'low' | 'moderate' | 'high' | 'critical' | null;
+          recommendations?: string[];
+          follow_up_required?: boolean;
+          follow_up_date?: string | null;
+          metadata?: any;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          session_type?: 'quick' | 'comprehensive' | 'crisis' | 'follow_up';
+          status?: 'in_progress' | 'completed' | 'abandoned' | 'interrupted';
+          started_at?: string;
+          completed_at?: string | null;
+          duration_minutes?: number | null;
+          mood_entries_count?: number;
+          feedback_entries_count?: number;
+          overall_score?: number | null;
+          risk_assessment?: 'low' | 'moderate' | 'high' | 'critical' | null;
+          recommendations?: string[];
+          follow_up_required?: boolean;
+          follow_up_date?: string | null;
+          metadata?: any;
+        };
+      };
+      professional_referrals: {
+        Row: {
+          id: string;
+          user_id: string;
+          alert_id: string | null;
+          referral_type: 'crisis' | 'therapy' | 'psychiatry' | 'support_group' | 'emergency';
+          urgency_level: 'immediate' | 'urgent' | 'routine' | 'optional';
+          resource_name: string;
+          resource_type: string;
+          contact_info: any;
+          description: string | null;
+          specializations: string[];
+          availability_info: string | null;
+          cost_info: string | null;
+          insurance_accepted: string[];
+          user_contacted: boolean;
+          user_contacted_at: string | null;
+          appointment_scheduled: boolean;
+          appointment_date: string | null;
+          outcome: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          alert_id?: string | null;
+          referral_type: 'crisis' | 'therapy' | 'psychiatry' | 'support_group' | 'emergency';
+          urgency_level: 'immediate' | 'urgent' | 'routine' | 'optional';
+          resource_name: string;
+          resource_type: string;
+          contact_info: any;
+          description?: string | null;
+          specializations?: string[];
+          availability_info?: string | null;
+          cost_info?: string | null;
+          insurance_accepted?: string[];
+          user_contacted?: boolean;
+          user_contacted_at?: string | null;
+          appointment_scheduled?: boolean;
+          appointment_date?: string | null;
+          outcome?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          alert_id?: string | null;
+          referral_type?: 'crisis' | 'therapy' | 'psychiatry' | 'support_group' | 'emergency';
+          urgency_level?: 'immediate' | 'urgent' | 'routine' | 'optional';
+          resource_name?: string;
+          resource_type?: string;
+          contact_info?: any;
+          description?: string | null;
+          specializations?: string[];
+          availability_info?: string | null;
+          cost_info?: string | null;
+          insurance_accepted?: string[];
+          user_contacted?: boolean;
+          user_contacted_at?: string | null;
+          appointment_scheduled?: boolean;
+          appointment_date?: string | null;
+          outcome?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+    };
+  };
+};
